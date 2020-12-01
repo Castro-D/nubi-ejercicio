@@ -1,5 +1,5 @@
 from flask import Flask
-from flask_restful import Api, Resource, reqparse
+from flask_restful import Api, Resource, reqparse, fields
 from Modelos import db
 
 app = Flask(__name__)
@@ -16,7 +16,16 @@ encuesta_put_args.add_argument("respuesta2", type=str, help="respuestas de encue
 encuesta_put_args.add_argument("respuesta3", type=str, help="respuestas de encuesta")
 encuesta_put_args.add_argument("respuesta4", type=str, help="respuestas de encuesta")
 
+resource_fields = {
+    'id': fields.String,
+    'titulo': fields.String,
+    'nombre': fields.String,
+    'id_pregunta': fields.String,
+    'id_respuesta': fields.String,
+    'pregunta': fields.String,
+    'respuesta': fields.String,
 
+}
 class Encuesta(Resource):
     def get(self, encuesta_id):
         return encuestas[encuesta_id]
