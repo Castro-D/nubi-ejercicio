@@ -1,6 +1,7 @@
 from flask import Flask
-from flask_restful import Api, Resource, reqparse, fields
-from Modelos import db
+from flask_restful import Api, Resource, reqparse, fields, marshal_with
+from Modelos import db, Encuestas
+
 
 app = Flask(__name__)
 api = Api(app)
@@ -26,9 +27,13 @@ resource_fields = {
     'respuesta': fields.String,
 
 }
+
+
 class Encuesta(Resource):
+    @marshal_with
     def get(self, encuesta_id):
-        return encuestas[encuesta_id]
+        resultado = Encuestas.query.filter_by(id=encuesta_id).first()
+        return resultado
 
 
 api.add_resource(Encuesta, "/encuesta/<int:encuesta_id>")
